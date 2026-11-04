@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANLEE — Minimalist Art & Design Portfolio</title>
+  <meta name="description" content="ANLEE is a curatorial publication and portfolio studio dedicated to minimalist art, architecture, and contemporary design.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #fafafa;
+      --text-main: #121212;
+      --text-muted: #737373;
+      --text-subtle: #9e9e9e;
+      --border-light: #eaeaea;
+      --border-dark: #121212;
+      --container-max: 1280px;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      font-size: 15px;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    /* Global Container */
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+    }
+
+    /* Top Banner / Announcement (Optional / Minimal) */
+    .top-bar {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      text-align: center;
+      padding: 8px 16px;
+      background: var(--bg-alt);
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    /* Balanced 3-Part Header */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      transition: var(--transition-smooth);
+    }
+
+    .header-inner {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      height: 72px;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    @media (max-width: 1024px) {
+      .header-inner {
+        padding: 0 20px;
+      }
+    }
+
+    /* Left Nav Links */
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-left a, .nav-right a {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-main);
+      position: relative;
+      padding: 4px 0;
+    }
+
+    .nav-left a:hover, .nav-right a:hover {
+      color: #000;
+      opacity: 0.7;
+    }
+
+    /* Center Brand Logo */
+    .brand-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .brand-logo {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      display: inline-block;
+    }
+
+    /* Right Nav Tools */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 22px;
+    }
+
+    .lang-btn {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border: 1px solid var(--border-light);
+      border-radius: 2px;
+      transition: var(--transition-smooth);
+      color: var(--text-main);
+    }
+
+    .lang-btn:hover {
+      background: var(--text-main);
+      color: #fff;
+      border-color: var(--text-main);
+    }
+
+    .search-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-main);
+      padding: 6px;
+    }
+
+    .search-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.75;
+    }
+
+    .mobile-menu-trigger {
+      display: none;
+      padding: 6px;
+      color: var(--text-main);
+    }
+
+    @media (max-width: 960px) {
+      .nav-left, .nav-right .desktop-link {
+        display: none;
+      }
+      .mobile-menu-trigger {
+        display: block;
+      }
+      .header-inner {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    /* Hero / Statement Section */
+    .hero-section {
+      padding: 80px 0 60px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-light);
+      background-color: var(--bg);
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .hero-heading {
+      font-family: var(--font-sans);
+      font-size: clamp(28px, 4.2vw, 46px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      max-width: 920px;
+      margin: 0 auto 28px;
+      color: var(--text-main);
+    }
+
+    .hero-sub {
+      font-size: clamp(14px, 1.6vw, 17px);
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* Featured Monograph (Spotlight Grid) */
+    .featured-section {
+      padding: 70px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      .featured-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+
+    .featured-image-wrap {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-alt);
+      aspect-ratio: 4/5;
+      cursor: pointer;
+    }
+
+    .featured-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .featured-image-wrap:hover img {
+      transform: scale(1.03);
+    }
+
+    .featured-content {
+      padding: 20px 0;
+    }
+
+    .category-badge {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      display: inline-block;
+    }
+
+    .featured-title {
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: 400;
+      line-height: 1.25;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+    }
+
+    .featured-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+
+    .btn-minimal {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 500;
+      color: var(--text-main);
+      padding: 12px 24px;
+      border: 1px solid var(--text-main);
+      background: transparent;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-minimal:hover {
+      background: var(--text-main);
+      color: #fff;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 60px 0 32px;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-link {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .section-link:hover {
+      color: var(--text-main);
+    }
+
+    /* Editorial Card Grid (4 columns) */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 1080px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .grid-4 {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+
+    /* Editorial Card Grid (2 columns) */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+
+    /* Card Component */
+    .article-card {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-img-wrap {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: var(--bg-alt);
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .card-img-wrap.landscape {
+      aspect-ratio: 16/10;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .article-card:hover .card-img-wrap img {
+      transform: scale(1.035);
+    }
+
+    .card-meta {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .article-card:hover .card-title {
+      color: #666;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* Quotes / Curatorial Interlude */
+    .interlude-section {
+      background-color: var(--bg-alt);
+      padding: 90px 0;
+      margin: 40px 0 60px;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      text-align: center;
+    }
+
+    .interlude-quote {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.5;
+      max-width: 820px;
+      margin: 0 auto 20px;
+      color: var(--text-main);
+    }
+
+    .interlude-author {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    /* Newsletter Section */
+    .newsletter-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      background: var(--bg);
+    }
+
+    .newsletter-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .newsletter-title {
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .newsletter-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 520px) {
+      .newsletter-form {
+        flex-direction: column;
+      }
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-family: inherit;
+      border: 1px solid var(--border-light);
+      outline: none;
+      background: #fff;
+      transition: border-color 0.2s ease;
+    }
+
+    .newsletter-input:focus {
+      border-color: var(--text-main);
+    }
+
+    .newsletter-btn {
+      padding: 12px 24px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 500;
+      background: var(--text-main);
+      color: #fff;
+      border: 1px solid var(--text-main);
+      transition: var(--transition-smooth);
+    }
+
+    .newsletter-btn:hover {
+      background: #333;
+      border-color: #333;
+    }
+
+    /* Site Footer */
+    footer.site-footer {
+      padding: 80px 0 50px;
+      background: var(--bg);
+      font-size: 13px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    @media (max-width: 860px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-brand {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .footer-desc {
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 340px;
+      font-weight: 300;
+    }
+
+    .footer-col-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-subtle);
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-main);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 36px;
+      color: var(--text-subtle);
+      font-size: 12px;
+    }
+
+    .back-to-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-main);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+    }
+
+    /* Reader Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 18, 18, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #fff;
+      max-width: 840px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      padding: 48px;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .modal-card {
+        padding: 28px 20px;
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 24px;
+      line-height: 1;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+    }
+
+    .modal-img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      margin: 20px 0;
+      background: var(--bg-alt);
+    }
+
+    .modal-meta {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .modal-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+
+    .modal-body {
+      font-size: 15px;
+      color: #333;
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 380px;
+      height: 100vh;
+      background: #fff;
+      z-index: 1000;
+      box-shadow: -8px 0 32px rgba(0,0,0,0.1);
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 36px 32px;
+    }
+
+    .mobile-drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .drawer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      list-style: none;
+    }
+
+    .drawer-links a {
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      color: var(--text-main);
+      font-weight: 300;
+    }
+
+    /* Search Modal */
+    .search-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.98);
+      z-index: 1001;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 100px 24px;
+    }
+
+    .search-modal.active {
+      display: flex;
+    }
+
+    .search-container {
+      max-width: 680px;
+      width: 100%;
+    }
+
+    .search-input-wrap {
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid var(--text-main);
+      padding-bottom: 12px;
+      margin-bottom: 32px;
+    }
+
+    .search-large-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 24px;
+      font-family: inherit;
+      background: transparent;
+      color: var(--text-main);
+    }
+
+    .search-results-list {
+      max-height: 50vh;
+      overflow-y: auto;
+      list-style: none;
+    }
+
+    .search-result-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-light);
+      cursor: pointer;
+    }
+
+    .search-result-item:hover h4 {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <span class="lang-text" data-en="ANLEE Curatorial Monograph 2026 — Available Worldwide" data-zh="ANLEE 2026 年度極簡策展專著 — 現已全球同步發行">ANLEE Curatorial Monograph 2026 — Available Worldwide</span>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header" id="masthead">
+    <div class="header-inner">
+      <!-- Left Navigation -->
+      <nav class="nav-left">
+        <a href="#featured" class="lang-text" data-en="Articles" data-zh="精選專欄">Articles</a>
+        <a href="#art" class="lang-text" data-en="Art" data-zh="純粹藝術">Art</a>
+        <a href="#design" class="lang-text" data-en="Design" data-zh="空間與器物">Design</a>
+        <a href="#interviews" class="lang-text" data-en="Interviews" data-zh="對談專訪">Interviews</a>
+        <a href="#essays" class="lang-text" data-en="Essays" data-zh="美學思辨">Essays</a>
+      </nav>
+
+      <!-- Center Logo -->
+      <div class="brand-center">
+        <a href="#" class="brand-logo">ANLEE</a>
+      </div>
+
+      <!-- Right Navigation & Tools -->
+      <nav class="nav-right">
+        <a href="#about" class="desktop-link lang-text" data-en="About" data-zh="關於 ANLEE">About</a>
+        <a href="#contact" class="desktop-link lang-text" data-en="Contact" data-zh="預約策展">Contact</a>
+        <button class="search-btn" id="openSearchBtn" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span class="desktop-link lang-text" data-en="Search" data-zh="搜尋">Search</span>
+        </button>
+        <button class="lang-btn" id="langSwitchBtn">繁中</button>
+        <button class="mobile-menu-trigger" id="openDrawerBtn" aria-label="Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-tagline lang-text" data-en="Curatorial Publication & Studio" data-zh="極簡策展刊物與設計事務所">Curatorial Publication & Studio</div>
+      <h1 class="hero-heading lang-text" 
+          data-en="Dedicated to the contemplation of minimalist art, timeless architecture, and spatial purity."
+          data-zh="專注於極簡藝術之凝視、歷久彌新的建築構想與純粹空間本質。">
+        Dedicated to the contemplation of minimalist art, timeless architecture, and spatial purity.
+      </h1>
+      <p class="hero-sub lang-text"
+         data-en="Exploring the essential through curated monographs, conversations with creators, and tactile objects crafted with unyielding restraint."
+         data-zh="透過策劃專著、創作者深度對話與以克制態度打造的器物，引領觀者回歸事物純淨本真。">
+        Exploring the essential through curated monographs, conversations with creators, and tactile objects crafted with unyielding restraint.
+      </p>
+    </div>
+  </section>
+
+  <!-- Featured Monograph Spotlight (Aesence style The Art of Less) -->
+  <section class="featured-section" id="featured">
+    <div class="container">
+      <div class="featured-grid">
+        <div class="featured-image-wrap" onclick="openArticle('art-of-less')">
+          <img src="https://www.aesence.com/wp-content/uploads/2026/08/theartofless01-851x1127.jpg" alt="The Art of Less – An Exploration of Essence" loading="lazy">
+        </div>
+        <div class="featured-content">
+          <span class="category-badge lang-text" data-en="NEWS & MONOGRAPH" data-zh="焦點專著與發表">NEWS & MONOGRAPH</span>
+          <h2 class="featured-title lang-text" onclick="openArticle('art-of-less')" data-en="The Art of Less – An Exploration of Essence" data-zh="減法之美：本質探索專著">The Art of Less – An Exploration of Essence</h2>
+          <p class="featured-desc lang-text" data-en="Created in collaboration with Jonas Bjerre-Poulsen of Norm Architects. This monograph synthesizes years of visual exploration, material purity, and curatorial research into the philosophy of reduction." data-zh="與 Norm Architects 創辦人 Jonas Bjerre-Poulsen 攜手創作。全書匯聚數年視覺探索與材料純度研究，深度剖析空間、留白與減法哲學之核心本質。">Created in collaboration with Jonas Bjerre-Poulsen of Norm Architects. This monograph synthesizes years of visual exploration, material purity, and curatorial research into the philosophy of reduction.</p>
+          <button class="btn-minimal" onclick="openArticle('art-of-less')">
+            <span class="lang-text" data-en="Explore Monograph ➞" data-zh="細讀專著論述 ➞">Explore Monograph ➞</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Selected Artworks & Sculptures -->
+  <section class="section-container" id="art">
+    <div class="container">
+      <div class="section-header">
+        <h3 class="section-title lang-text" data-en="Selected Artworks" data-zh="精選藝術與雕塑">Selected Artworks</h3>
+        <a href="#interviews" class="section-link lang-text" data-en="View All ➞" data-zh="完整瀏覽 ➞">View All ➞</a>
+      </div>
+
+      <div class="grid-4">
+        <!-- Stephan Siebers -->
+        <article class="article-card" onclick="openArticle('stephan-siebers')">
+          <div class="card-img-wrap">
+            <img src="https://www.aesence.com/wp-content/uploads/2022/12/stephan-siebers-01-title-770x1013.jpg" alt="Stephan Siebers – Exploring the Balance Between Volume and Mass" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="ART & SCULPTURE" data-zh="當代雕塑">ART & SCULPTURE</span>
+          <h4 class="card-title lang-text" data-en="Stephan Siebers – Exploring the Balance Between Volume and Mass" data-zh="Stephan Siebers：量體與重力的純粹平衡">Stephan Siebers – Exploring the Balance Between Volume and Mass</h4>
+          <p class="card-desc lang-text" data-en="German sculptor Stephan Siebers constructs geometric structures of steel and stone that seemingly defy gravity, evoking quiet contemplation through absolute precision." data-zh="德國雕塑家 Stephan Siebers 以鋼鐵與石材構築對抗重力的幾何結構，在絕對的比例精度中引發靜謐沉思。">German sculptor Stephan Siebers constructs geometric structures of steel and stone that seemingly defy gravity, evoking quiet contemplation through absolute precision.</p>
+        </article>
+
+        <!-- Chris Halstrom -->
+        <article class="article-card" onclick="openArticle('chris-halstrom')">
+          <div class="card-img-wrap">
+            <img src="https://www.aesence.com/wp-content/uploads/2023/04/Chris-Liljenberg-Halstrom-aesence-01-770x963.jpg" alt="Chris Liljenberg Halstrøm – An Ode to Simplicity" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="DESIGN & TEXTILE" data-zh="設計與織品">DESIGN & TEXTILE</span>
+          <h4 class="card-title lang-text" data-en="Chris Liljenberg Halstrøm – An Ode to Simplicity" data-zh="Chris Liljenberg Halstrøm：極簡實踐之詩">Chris Liljenberg Halstrøm – An Ode to Simplicity</h4>
+          <p class="card-desc lang-text" data-en="Danish-Swedish designer explores tactile intimacy through linen, wool, and unadorned surfaces, honoring everyday spatial rituals with Scandinavian restraint." data-zh="丹麥瑞典設計師以亞麻、羊毛與純粹表面探索觸覺的親密性，以北歐克制美學向日常空間儀式致敬。">Danish-Swedish designer explores tactile intimacy through linen, wool, and unadorned surfaces, honoring everyday spatial rituals with Scandinavian restraint.</p>
+        </article>
+
+        <!-- Layered Steel -->
+        <article class="article-card" onclick="openArticle('layered-steel')">
+          <div class="card-img-wrap">
+            <img src="https://www.aesence.com/wp-content/uploads/2023/02/aesence_layered_steel_chair02_02-1-770x1156.jpg" alt="Layered Steel by Hyungshin Hwang" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="OBJECT & METAL" data-zh="工藝器物與金屬">OBJECT & METAL</span>
+          <h4 class="card-title lang-text" data-en="Layered Steel by Hyungshin Hwang" data-zh="黃炯信：層疊鋼材的幾何雕塑椅">Layered Steel by Hyungshin Hwang</h4>
+          <p class="card-desc lang-text" data-en="Seoul-based designer Hyungshin Hwang transforms flat steel plates into monumental functional objects, creating fluid forms from rigid industrial rigidity." data-zh="首爾設計師黃炯信將平面鋼板疊合為具紀念碑特質的機能器物，在冷峻剛硬的工業材質中雕鑿流暢形變。">Seoul-based designer Hyungshin Hwang transforms flat steel plates into monumental functional objects, creating fluid forms from rigid industrial rigidity.</p>
+        </article>
+
+        <!-- Chung Chang-Sup -->
+        <article class="article-card" onclick="openArticle('chung-chang-sup')">
+          <div class="card-img-wrap">
+            <img src="https://www.aesence.com/wp-content/uploads/2023/01/chung-chang-sup-meditation-91010-770x666.jpg" alt="Chung Chang-Sup – Honoring Nature Through Monochrome Paintings" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="MONOCHROME PAINTING" data-zh="單色畫派">MONOCHROME PAINTING</span>
+          <h4 class="card-title lang-text" data-en="Chung Chang-Sup – Honoring Nature Through Monochrome Paintings" data-zh="鄭昌燮：以單色畫向自然材質致敬">Chung Chang-Sup – Honoring Nature Through Monochrome Paintings</h4>
+          <p class="card-desc lang-text" data-en="Pioneering Dansaekhwa master Chung Chang-Sup uses traditional Tak mulberry paper fibers to bridge human consciousness and organic materiality." data-zh="韓國單色畫大師鄭昌燮運用傳統楮樹樹皮纖維，在手撕與浸潤的痕跡中搭起人類感知與原生材料的共鳴。">Pioneering Dansaekhwa master Chung Chang-Sup uses traditional Tak mulberry paper fibers to bridge human consciousness and organic materiality.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curatorial Interlude Quote -->
+  <section class="interlude-section">
+    <div class="container">
+      <blockquote class="interlude-quote lang-text"
+                  data-en="“Simplicity is not the lack of clutter, that’s a consequence of simplicity. Simplicity is somehow essentially describing the purpose and place of an object and space.”"
+                  data-zh="「簡約絕非僅是去除雜亂，那僅是簡約的表徵；真正的簡約，是直抵器物與空間存有的核心使命。」">
+        “Simplicity is not the lack of clutter, that’s a consequence of simplicity. Simplicity is somehow essentially describing the purpose and place of an object and space.”
+      </blockquote>
+      <div class="interlude-author lang-text" data-en="ANLEE Aesthetic Philosophy" data-zh="ANLEE 策展美學宣言">ANLEE Aesthetic Philosophy</div>
+    </div>
+  </section>
+
+  <!-- Section 2: Conversations & Interviews -->
+  <section class="section-container" id="interviews">
+    <div class="container">
+      <div class="section-header">
+        <h3 class="section-title lang-text" data-en="Artist Conversations" data-zh="創作者深度對話">Artist Conversations</h3>
+        <a href="#essays" class="section-link lang-text" data-en="Explore Dialogues ➞" data-zh="閱讀對談 ➞">Explore Dialogues ➞</a>
+      </div>
+
+      <div class="grid-2">
+        <!-- Jean-Baptiste -->
+        <article class="article-card" onclick="openArticle('jean-baptiste')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2026/06/jean-baptiste-besancon-aesence-01-770x1027.jpg" alt="Painting as Language – A Conversation With Artist Jean-Baptiste Besançon" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="INTERVIEWS" data-zh="專題對談">INTERVIEWS</span>
+          <h4 class="card-title lang-text" data-en="Painting as Language – A Conversation With Artist Jean-Baptiste Besançon" data-zh="繪畫即語言：專訪法國藝術家 Jean-Baptiste Besançon">Painting as Language – A Conversation With Artist Jean-Baptiste Besançon</h4>
+          <p class="card-desc lang-text" data-en="Besançon discusses how brushstrokes, spatial tension, and silence construct an emotional dialect that transcends representational boundaries." data-zh="Besançon 探討筆觸、留白張力與沉默如何構築跨越具象界限的情感語彙，展現抽象油彩的磅礡張力。">Besançon discusses how brushstrokes, spatial tension, and silence construct an emotional dialect that transcends representational boundaries.</p>
+        </article>
+
+        <!-- Steingrímur Gauti -->
+        <article class="article-card" onclick="openArticle('steingrimur-gauti')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2026/04/SG_studio2025_02_title-770x1027.jpg" alt="Painting as Presence – A Conversation With Artist Steingrímur Gauti" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="INTERVIEWS" data-zh="專題對談">INTERVIEWS</span>
+          <h4 class="card-title lang-text" data-en="Painting as Presence – A Conversation With Artist Steingrímur Gauti" data-zh="繪畫即存有：專訪冰島藝術家 Steingrímur Gauti">Painting as Presence – A Conversation With Artist Steingrímur Gauti</h4>
+          <p class="card-desc lang-text" data-en="From his Reykjavík studio, Gauti reflects on intuitive painting, the northern wilderness, and how time crystallizes across expansive canvases." data-zh="自雷克雅維克工作室出發，Gauti 分享直覺繪畫、北境荒原氣息，以及時間如何在大幅畫布上凝結為沉靜痕跡。">From his Reykjavík studio, Gauti reflects on intuitive painting, the northern wilderness, and how time crystallizes across expansive canvases.</p>
+        </article>
+
+        <!-- Marina Arias -->
+        <article class="article-card" onclick="openArticle('marina-arias')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2026/03/1-374x559.jpg" alt="Landscapes of Silence – A Conversation With Artist Marina Arias" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="INTERVIEWS" data-zh="專題對談">INTERVIEWS</span>
+          <h4 class="card-title lang-text" data-en="Landscapes of Silence – A Conversation With Artist Marina Arias" data-zh="寂靜的地景：專訪西班牙藝術家 Marina Arias">Landscapes of Silence – A Conversation With Artist Marina Arias</h4>
+          <p class="card-desc lang-text" data-en="Arias reflects on reduction, tonal gradation, and how earth pigments capture the delicate stillness of Iberian topographies." data-zh="Arias 反思色彩減法、色調漸層，以及大地礦物顏料如何精準捕捉伊比利半島地貌的幽微靜謐。">Arias reflects on reduction, tonal gradation, and how earth pigments capture the delicate stillness of Iberian topographies.</p>
+        </article>
+
+        <!-- Hideaki Yamanobe -->
+        <article class="article-card" onclick="openArticle('hideaki-yamanobe')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2026/02/portraet-Atelier_02-770x1027.jpg" alt="Silent Perception – A Conversation With Artist Hideaki Yamanobe" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="INTERVIEWS" data-zh="專題對談">INTERVIEWS</span>
+          <h4 class="card-title lang-text" data-en="Silent Perception – A Conversation With Artist Hideaki Yamanobe" data-zh="靜默感知：專訪日本藝術家 山野邊英明">Silent Perception – A Conversation With Artist Hideaki Yamanobe</h4>
+          <p class="card-desc lang-text" data-en="Based between Tokyo and Cologne, Yamanobe explores the subtleties of black and white, oil pigments, and musical reverberations on linen." data-zh="穿梭於東京與科隆之間，山野邊英明在亞麻布上探討黑白細緻質地、油彩光澤與宛如樂音回響的視覺餘韻。">Based between Tokyo and Cologne, Yamanobe explores the subtleties of black and white, oil pigments, and musical reverberations on linen.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Critical Essays & Perspectives -->
+  <section class="section-container" id="essays">
+    <div class="container">
+      <div class="section-header">
+        <h3 class="section-title lang-text" data-en="Essays & Editorials" data-zh="美學思辨與隨筆">Essays & Editorials</h3>
+        <a href="#design" class="section-link lang-text" data-en="All Perspectives ➞" data-zh="所有文章 ➞">All Perspectives ➞</a>
+      </div>
+
+      <div class="grid-4">
+        <!-- Black Paintings -->
+        <article class="article-card" onclick="openArticle('black-paintings')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2022/10/black-paintings-aesence-01-770x513.jpg" alt="The Black Paintings of the New York School" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="ESSAYS & EDITORIALS" data-zh="論述與隨筆">ESSAYS & EDITORIALS</span>
+          <h4 class="card-title lang-text" data-en="The Black Paintings of the New York School" data-zh="紐約畫派的黑色繪畫：極限色域之辯">The Black Paintings of the New York School</h4>
+          <p class="card-desc lang-text" data-en="Examining how Ad Reinhardt, Mark Rothko, and Frank Stella revolutionized modernism by confronting the abyss of pure blackness." data-zh="審視 Ad Reinhardt、Mark Rothko 與 Frank Stella 如何透過直面純粹黑色的深邃，掀起現代主義美學革命。">Examining how Ad Reinhardt, Mark Rothko, and Frank Stella revolutionized modernism by confronting the abyss of pure blackness.</p>
+        </article>
+
+        <!-- Minimalism Abstract -->
+        <article class="article-card" onclick="openArticle('minimalism-abstract')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2023/05/minimalist-abstract-expressionism-01-770x513.jpg" alt="Minimalism in Abstract Expressionism – A Contradiction?" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="ESSAYS & EDITORIALS" data-zh="論述與隨筆">ESSAYS & EDITORIALS</span>
+          <h4 class="card-title lang-text" data-en="Minimalism in Abstract Expressionism – A Contradiction?" data-zh="抽象表現主義中的極簡主義：矛盾或演進？">Minimalism in Abstract Expressionism – A Contradiction?</h4>
+          <p class="card-desc lang-text" data-en="Unpacking the philosophical tension between gestural emotional excess and the geometric discipline of early minimalists." data-zh="解構充滿激情的筆觸抒發與早期極簡主義者嚴格幾何紀律之間的哲學張力與歷史對話。">Unpacking the philosophical tension between gestural emotional excess and the geometric discipline of early minimalists.</p>
+        </article>
+
+        <!-- AI Generated Art -->
+        <article class="article-card" onclick="openArticle('ai-generated-art')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2024/06/abstract-art-ai-01-770x513.jpg" alt="Is AI-Generated Art really Art?" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="ESSAYS & EDITORIALS" data-zh="論述與隨筆">ESSAYS & EDITORIALS</span>
+          <h4 class="card-title lang-text" data-en="Is AI-Generated Art really Art?" data-zh="AI 生成之物，能被稱為純粹藝術嗎？">Is AI-Generated Art really Art?</h4>
+          <p class="card-desc lang-text" data-en="Can synthetic algorithms replicate intentionality, bodily presence, and the delicate vulnerability of the human creative spirit?" data-zh="演算法是否能真正重現創作者的意志意圖、肉身存在感，以及人類心靈在創作過程中的脆弱與靈光？">Can synthetic algorithms replicate intentionality, bodily presence, and the delicate vulnerability of the human creative spirit?</p>
+        </article>
+
+        <!-- Loss of Identity -->
+        <article class="article-card" onclick="openArticle('minimalist-loss-identity')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2024/10/black-minimalism-01-770x513.jpg" alt="Does Minimalist Design Mean a Loss of Identity?" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="ESSAYS & EDITORIALS" data-zh="論述與隨筆">ESSAYS & EDITORIALS</span>
+          <h4 class="card-title lang-text" data-en="Does Minimalist Design Mean a Loss of Identity?" data-zh="極簡設計是否意味著個人識別的消弭？">Does Minimalist Design Mean a Loss of Identity?</h4>
+          <p class="card-desc lang-text" data-en="Distinguishing between sterile corporate standardization and thoughtful aesthetic curation that amplifies spatial identity." data-zh="釐清空洞的商業標準化與深思熟慮的美學策展之間的根本分野：減法並非抹滅，而是突顯空間靈魂。">Distinguishing between sterile corporate standardization and thoughtful aesthetic curation that amplifies spatial identity.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Design Objects & Lighting -->
+  <section class="section-container" id="design">
+    <div class="container">
+      <div class="section-header">
+        <h3 class="section-title lang-text" data-en="Design & Lighting Objects" data-zh="純粹器物與燈具">Design & Lighting Objects</h3>
+        <a href="#featured" class="section-link lang-text" data-en="Curated Works ➞" data-zh="典藏系列 ➞">Curated Works ➞</a>
+      </div>
+
+      <div class="grid-4">
+        <!-- Hayden Martis -->
+        <article class="article-card" onclick="openArticle('tension-martis')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2019/02/tension-hayden-martis-aesence-01-770x513.jpg" alt="Tension by Hayden Martis" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="DESIGN OBJECT" data-zh="器物設計">DESIGN OBJECT</span>
+          <h4 class="card-title lang-text" data-en="Tension by Hayden Martis" data-zh="Hayden Martis：張力之境幾何座具">Tension by Hayden Martis</h4>
+          <p class="card-desc lang-text" data-en="New Zealand designer explores structural equilibrium through monolithic basalt and cold-rolled stainless steel." data-zh="紐西蘭設計師透過玄武岩塊與冷軋不鏽鋼的力學抗衡，演繹結構靜態平衡的永恆之美。">New Zealand designer explores structural equilibrium through monolithic basalt and cold-rolled stainless steel.</p>
+        </article>
+
+        <!-- Formafantasma -->
+        <article class="article-card" onclick="openArticle('delta-formafantasma')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2018/10/aesence-blog-delta-formafantasma-01-770x513.jpg" alt="Delta by Formafantasma" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="DESIGN OBJECT" data-zh="器物設計">DESIGN OBJECT</span>
+          <h4 class="card-title lang-text" data-en="Delta by Formafantasma" data-zh="Formafantasma：Delta 義大利極簡系列">Delta by Formafantasma</h4>
+          <p class="card-desc lang-text" data-en="Italian research-based design duo reimagines everyday porcelain, bronze, and stone inspired by the ancient Roman ruins." data-zh="義大利研究型設計雙人組自羅馬古遺址汲取靈感，重構瓷器、青銅與原石的當代器物哲學。">Italian research-based design duo reimagines everyday porcelain, bronze, and stone inspired by the ancient Roman ruins.</p>
+        </article>
+
+        <!-- Shinya Yoshida -->
+        <article class="article-card" onclick="openArticle('geometria-light')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2023/05/geometria-light-shinya-yoshida-01-770x513.jpg" alt="Geometria Light by Shinya Yoshida" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="LIGHTING DESIGN" data-zh="燈具設計">LIGHTING DESIGN</span>
+          <h4 class="card-title lang-text" data-en="Geometria Light by Shinya Yoshida" data-zh="吉田真也：Geometria 極簡幾何立燈">Geometria Light by Shinya Yoshida</h4>
+          <p class="card-desc lang-text" data-en="Tokyo designer explores mathematical symmetry and optical diffusion through anodized aluminum and slender LED strips." data-zh="東京設計師以陽極氧化鋁材與極細 LED 導光構件，展現數學對稱性與光影漫射的詩意結合。">Tokyo designer explores mathematical symmetry and optical diffusion through anodized aluminum and slender LED strips.</p>
+        </article>
+
+        <!-- Denis Castaing -->
+        <article class="article-card" onclick="openArticle('nocta-table-lamp')">
+          <div class="card-img-wrap landscape">
+            <img src="https://www.aesence.com/wp-content/uploads/2023/09/Nocta-table-lamp-Denis-Castaing-aesence-01-770x513.jpg" alt="Nocta Table Lamp by Denis Castaing" loading="lazy">
+          </div>
+          <span class="card-meta lang-text" data-en="LIGHTING DESIGN" data-zh="燈具設計">LIGHTING DESIGN</span>
+          <h4 class="card-title lang-text" data-en="Nocta Table Lamp by Denis Castaing" data-zh="Denis Castaing：Nocta 夜境桌燈">Nocta Table Lamp by Denis Castaing</h4>
+          <p class="card-desc lang-text" data-en="A monolithic presence crafted in darkened cast aluminum, shedding an ambient downward glow reminiscent of twilight." data-zh="以暗色鑄鋁打造的沉穩量體，向下投射宛若黃昏微光的柔和氛圍，體現雕塑與實用光源的交融。">A monolithic presence crafted in darkened cast aluminum, shedding an ambient downward glow reminiscent of twilight.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-inner">
+        <h3 class="newsletter-title lang-text" data-en="Curated Dispatch" data-zh="月度美學通訊">Curated Dispatch</h3>
+        <p class="newsletter-sub lang-text"
+           data-en="Receive a thoughtful monthly selection of minimalist monographs, design reflections, and exhibition previews directly to your inbox."
+           data-zh="每月接收一封關於極簡專著、當代空間思辨與藝廊展演的沉靜選輯。">
+          Receive a thoughtful monthly selection of minimalist monographs, design reflections, and exhibition previews directly to your inbox.
+        </p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert(currentLang === 'zh' ? '感謝訂閱 ANLEE 美學通訊。' : 'Thank you for subscribing to ANLEE Dispatch.');">
+          <input type="email" class="newsletter-input" placeholder="Your email address" required>
+          <button type="submit" class="newsletter-btn lang-text" data-en="Subscribe" data-zh="立即訂閱">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer" id="about">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">ANLEE</div>
+          <p class="footer-desc lang-text"
+             data-en="ANLEE is an independent curatorial publication and portfolio studio dedicated to minimalist aesthetics, spatial dialogue, and material authenticity."
+             data-zh="ANLEE 是一家專注於極簡美學、空間對話與純粹材料本質的獨立策展刊物與設計工作室。">
+            ANLEE is an independent curatorial publication and portfolio studio dedicated to minimalist aesthetics, spatial dialogue, and material authenticity.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-col-title lang-text" data-en="Editorial" data-zh="刊物單元">Editorial</div>
+          <ul class="footer-links">
+            <li><a href="#art" class="lang-text" data-en="Art & Sculpture" data-zh="純粹藝術">Art & Sculpture</a></li>
+            <li><a href="#design" class="lang-text" data-en="Object & Light" data-zh="空間器物">Object & Light</a></li>
+            <li><a href="#interviews" class="lang-text" data-en="Dialogues" data-zh="深度專訪">Dialogues</a></li>
+            <li><a href="#essays" class="lang-text" data-en="Essays" data-zh="美學論述">Essays</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title lang-text" data-en="Studio" data-zh="工作室">Studio</div>
+          <ul class="footer-links" id="contact">
+            <li><a href="#" class="lang-text" data-en="Art Advisory" data-zh="藝術諮詢顧問">Art Advisory</a></li>
+            <li><a href="#" class="lang-text" data-en="Curatorial Research" data-zh="策展研究">Curatorial Research</a></li>
+            <li><a href="#" class="lang-text" data-en="Monographs" data-zh="出版專著">Monographs</a></li>
+            <li><a href="#" class="lang-text" data-en="Private Commissions" data-zh="空間委託委任">Private Commissions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title lang-text" data-en="Connect" data-zh="聯絡與關注">Connect</div>
+          <ul class="footer-links">
+            <li><a href="#" target="_blank">Instagram</a></li>
+            <li><a href="#" target="_blank">Journal</a></li>
+            <li><a href="mailto:studio@anleedesign.com">studio@anleedesign.com</a></li>
+            <li><a href="#" class="lang-text" data-en="Privacy Policy" data-zh="隱私條款">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 ANLEE®. All Rights Reserved.</div>
+        <div class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+          <span class="lang-text" data-en="Back to top ➞" data-zh="回到頂部 ➞">Back to top ➞</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Reader Modal -->
+  <div class="modal-overlay" id="articleModal">
+    <div class="modal-card">
+      <span class="modal-close" onclick="closeArticle()">&times;</span>
+      <div class="modal-meta" id="modalMeta">NEWS</div>
+      <h2 class="modal-title" id="modalTitle">Article Title</h2>
+      <img src="" alt="" class="modal-img" id="modalImg">
+      <div class="modal-body" id="modalBody">Article content goes here...</div>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-header">
+      <div class="brand-logo">ANLEE</div>
+      <button onclick="toggleDrawer()" style="font-size:24px; color:var(--text-main);">&times;</button>
+    </div>
+    <ul class="drawer-links">
+      <li><a href="#featured" onclick="toggleDrawer()" class="lang-text" data-en="Articles" data-zh="精選專欄">Articles</a></li>
+      <li><a href="#art" onclick="toggleDrawer()" class="lang-text" data-en="Art" data-zh="純粹藝術">Art</a></li>
+      <li><a href="#design" onclick="toggleDrawer()" class="lang-text" data-en="Design" data-zh="空間器物">Design</a></li>
+      <li><a href="#interviews" onclick="toggleDrawer()" class="lang-text" data-en="Interviews" data-zh="深度對話">Interviews</a></li>
+      <li><a href="#essays" onclick="toggleDrawer()" class="lang-text" data-en="Essays" data-zh="美學論述">Essays</a></li>
+      <li><a href="#about" onclick="toggleDrawer()" class="lang-text" data-en="About" data-zh="關於 ANLEE">About</a></li>
+      <li><a href="#contact" onclick="toggleDrawer()" class="lang-text" data-en="Contact" data-zh="預約策展">Contact</a></li>
+    </ul>
+    <div style="margin-top:auto; padding-top:20px; border-top:1px solid var(--border-light);">
+      <button class="lang-btn" id="drawerLangBtn" style="width:100%; padding:10px;">Switch to 繁中</button>
+    </div>
+  </div>
+
+  <!-- Search Modal -->
+  <div class="search-modal" id="searchModal">
+    <div style="width:100%; max-width:680px; display:flex; justify-content:flex-end; margin-bottom:20px;">
+      <button onclick="closeSearch()" style="font-size:28px; color:var(--text-main);">&times;</button>
+    </div>
+    <div class="search-container">
+      <div class="search-input-wrap">
+        <input type="text" class="search-large-input" id="searchInput" placeholder="Search monographs, artists, essays...">
+      </div>
+      <ul class="search-results-list" id="searchResults"></ul>
+    </div>
+  </div>
+
+  <!-- Structured Articles JSON Data for Client Script -->
+  <script>
+    const articlesData = [{"id": "art-of-less", "category_en": "NEWS & MONOGRAPH", "category_zh": "焦點專著與發表", "title_en": "The Art of Less – An Exploration of Essence", "title_zh": "減法之美：本質探索專著", "img": "https://www.aesence.com/wp-content/uploads/2026/08/theartofless01-851x1127.jpg", "desc_en": "Created in collaboration with Jonas Bjerre-Poulsen of Norm Architects. This monograph synthesizes years of visual exploration, material purity, and curatorial research into the philosophy of reduction.", "desc_zh": "與 Norm Architects 創辦人 Jonas Bjerre-Poulsen 攜手創作。全書匯聚數年視覺探索與材料純度研究，深度剖析空間、留白與減法哲學之核心本質。", "tag": "Featured Book"}, {"id": "stephan-siebers", "category_en": "ART & SCULPTURE", "category_zh": "當代雕塑", "title_en": "Stephan Siebers – Exploring the Balance Between Volume and Mass", "title_zh": "Stephan Siebers：量體與重力的純粹平衡", "img": "https://www.aesence.com/wp-content/uploads/2022/12/stephan-siebers-01-title-770x1013.jpg", "desc_en": "German sculptor Stephan Siebers constructs geometric structures of steel and stone that seemingly defy gravity, evoking quiet contemplation through absolute precision.", "desc_zh": "德國雕塑家 Stephan Siebers 以鋼鐵與石材構築對抗重力的幾何結構，在絕對的比例精度中引發靜謐沉思。", "tag": "Sculpture"}, {"id": "chris-halstrom", "category_en": "DESIGN & TEXTILE", "category_zh": "設計與織品", "title_en": "Chris Liljenberg Halstrøm – An Ode to Simplicity", "title_zh": "Chris Liljenberg Halstrøm：極簡實踐之詩", "img": "https://www.aesence.com/wp-content/uploads/2023/04/Chris-Liljenberg-Halstrom-aesence-01-770x963.jpg", "desc_en": "Danish-Swedish designer explores tactile intimacy through linen, wool, and unadorned surfaces, honoring everyday spatial rituals with Scandinavian restraint.", "desc_zh": "丹麥瑞典設計師以亞麻、羊毛與純粹表面探索觸覺的親密性，以北歐克制美學向日常空間儀式致敬。", "tag": "Textile"}, {"id": "layered-steel", "category_en": "OBJECT & METAL", "category_zh": "工藝器物與金屬", "title_en": "Layered Steel by Hyungshin Hwang", "title_zh": "黃炯信：層疊鋼材的幾何雕塑椅", "img": "https://www.aesence.com/wp-content/uploads/2023/02/aesence_layered_steel_chair02_02-1-770x1156.jpg", "desc_en": "Seoul-based designer Hyungshin Hwang transforms flat steel plates into monumental functional objects, creating fluid forms from rigid industrial rigidity.", "desc_zh": "首爾設計師黃炯信將平面鋼板疊合為具紀念碑特質的機能器物，在冷峻剛硬的工業材質中雕鑿流暢形變。", "tag": "Design"}, {"id": "chung-chang-sup", "category_en": "MONOCHROME PAINTING", "category_zh": "單色畫派", "title_en": "Chung Chang-Sup – Honoring Nature Through Monochrome Paintings", "title_zh": "鄭昌燮：以單色畫向自然材質致敬", "img": "https://www.aesence.com/wp-content/uploads/2023/01/chung-chang-sup-meditation-91010-770x666.jpg", "desc_en": "Pioneering Dansaekhwa master Chung Chang-Sup uses traditional Tak mulberry paper fibers to bridge human consciousness and organic materiality.", "desc_zh": "韓國單色畫大師鄭昌燮運用傳統楮樹樹皮纖維，在手撕與浸潤的痕跡中搭起人類感知與原生材料的共鳴。", "tag": "Dansaekhwa"}, {"id": "jean-baptiste", "category_en": "INTERVIEWS", "category_zh": "專題對談", "title_en": "Painting as Language – A Conversation With Artist Jean-Baptiste Besançon", "title_zh": "繪畫即語言：專訪法國藝術家 Jean-Baptiste Besançon", "img": "https://www.aesence.com/wp-content/uploads/2026/06/jean-baptiste-besancon-aesence-01-770x1027.jpg", "desc_en": "Besançon discusses how brushstrokes, spatial tension, and silence construct an emotional dialect that transcends representational boundaries.", "desc_zh": "Besançon 探討筆觸、留白張力與沉默如何構築跨越具象界限的情感語彙，展現抽象油彩的磅礡張力。", "tag": "Interview"}, {"id": "steingrimur-gauti", "category_en": "INTERVIEWS", "category_zh": "專題對談", "title_en": "Painting as Presence – A Conversation With Artist Steingrímur Gauti", "title_zh": "繪畫即存有：專訪冰島藝術家 Steingrímur Gauti", "img": "https://www.aesence.com/wp-content/uploads/2026/04/SG_studio2025_02_title-770x1027.jpg", "desc_en": "From his Reykjavík studio, Gauti reflects on intuitive painting, the northern wilderness, and how time crystallizes across expansive canvases.", "desc_zh": "自雷克雅維克工作室出發，Gauti 分享直覺繪畫、北境荒原氣息，以及時間如何在大幅畫布上凝結為沉靜痕跡。", "tag": "Interview"}, {"id": "marina-arias", "category_en": "INTERVIEWS", "category_zh": "專題對談", "title_en": "Landscapes of Silence – A Conversation With Artist Marina Arias", "title_zh": "寂靜的地景：專訪西班牙藝術家 Marina Arias", "img": "https://www.aesence.com/wp-content/uploads/2026/03/1-374x559.jpg", "desc_en": "Arias reflects on reduction, tonal gradation, and how earth pigments capture the delicate stillness of Iberian topographies.", "desc_zh": "Arias 反思色彩減法、色調漸層，以及大地礦物顏料如何精準捕捉伊比利半島地貌的幽微靜謐。", "tag": "Interview"}, {"id": "hideaki-yamanobe", "category_en": "INTERVIEWS", "category_zh": "專題對談", "title_en": "Silent Perception – A Conversation With Artist Hideaki Yamanobe", "title_zh": "靜默感知：專訪日本藝術家 山野邊英明", "img": "https://www.aesence.com/wp-content/uploads/2026/02/portraet-Atelier_02-770x1027.jpg", "desc_en": "Based between Tokyo and Cologne, Yamanobe explores the subtleties of black and white, oil pigments, and musical reverberations on linen.", "desc_zh": "穿梭於東京與科隆之間，山野邊英明在亞麻布上探討黑白細緻質地、油彩光澤與宛如樂音回響的視覺餘韻。", "tag": "Interview"}, {"id": "black-paintings", "category_en": "ESSAYS & EDITORIALS", "category_zh": "論述與隨筆", "title_en": "The Black Paintings of the New York School", "title_zh": "紐約畫派的黑色繪畫：極限色域之辯", "img": "https://www.aesence.com/wp-content/uploads/2022/10/black-paintings-aesence-01-770x513.jpg", "desc_en": "Examining how Ad Reinhardt, Mark Rothko, and Frank Stella revolutionized modernism by confronting the abyss of pure blackness.", "desc_zh": "審視 Ad Reinhardt、Mark Rothko 與 Frank Stella 如何透過直面純粹黑色的深邃，掀起現代主義美學革命。", "tag": "Essay"}, {"id": "minimalism-abstract", "category_en": "ESSAYS & EDITORIALS", "category_zh": "論述與隨筆", "title_en": "Minimalism in Abstract Expressionism – A Contradiction?", "title_zh": "抽象表現主義中的極簡主義：矛盾或演進？", "img": "https://www.aesence.com/wp-content/uploads/2023/05/minimalist-abstract-expressionism-01-770x513.jpg", "desc_en": "Unpacking the philosophical tension between gestural emotional excess and the geometric discipline of early minimalists.", "desc_zh": "解構充滿激情的筆觸抒發與早期極簡主義者嚴格幾何紀律之間的哲學張力與歷史對話。", "tag": "Essay"}, {"id": "ai-generated-art", "category_en": "ESSAYS & EDITORIALS", "category_zh": "論述與隨筆", "title_en": "Is AI-Generated Art really Art?", "title_zh": "AI 生成之物，能被稱為純粹藝術嗎？", "img": "https://www.aesence.com/wp-content/uploads/2024/06/abstract-art-ai-01-770x513.jpg", "desc_en": "Can synthetic algorithms replicate intentionality, bodily presence, and the delicate vulnerability of the human creative spirit?", "desc_zh": "演算法是否能真正重現創作者的意志意圖、肉身存在感，以及人類心靈在創作過程中的脆弱與靈光？", "tag": "Perspective"}, {"id": "minimalist-loss-identity", "category_en": "ESSAYS & EDITORIALS", "category_zh": "論述與隨筆", "title_en": "Does Minimalist Design Mean a Loss of Identity?", "title_zh": "極簡設計是否意味著個人識別的消弭？", "img": "https://www.aesence.com/wp-content/uploads/2024/10/black-minimalism-01-770x513.jpg", "desc_en": "Distinguishing between sterile corporate standardization and thoughtful aesthetic curation that amplifies spatial identity.", "desc_zh": "釐清空洞的商業標準化與深思熟慮的美學策展之間的根本分野：減法並非抹滅，而是突顯空間靈魂。", "tag": "Critique"}, {"id": "tension-martis", "category_en": "DESIGN OBJECT", "category_zh": "器物設計", "title_en": "Tension by Hayden Martis", "title_zh": "Hayden Martis：張力之境幾何座具", "img": "https://www.aesence.com/wp-content/uploads/2019/02/tension-hayden-martis-aesence-01-770x513.jpg", "desc_en": "New Zealand designer explores structural equilibrium through monolithic basalt and cold-rolled stainless steel.", "desc_zh": "紐西蘭設計師透過玄武岩塊與冷軋不鏽鋼的力學抗衡，演繹結構靜態平衡的永恆之美。", "tag": "Object"}, {"id": "delta-formafantasma", "category_en": "DESIGN OBJECT", "category_zh": "器物設計", "title_en": "Delta by Formafantasma", "title_zh": "Formafantasma：Delta 義大利極簡系列", "img": "https://www.aesence.com/wp-content/uploads/2018/10/aesence-blog-delta-formafantasma-01-770x513.jpg", "desc_en": "Italian research-based design duo reimagines everyday porcelain, bronze, and stone inspired by the ancient Roman ruins.", "desc_zh": "義大利研究型設計雙人組自羅馬古遺址汲取靈感，重構瓷器、青銅與原石的當代器物哲學。", "tag": "Object"}, {"id": "geometria-light", "category_en": "LIGHTING DESIGN", "category_zh": "燈具設計", "title_en": "Geometria Light by Shinya Yoshida", "title_zh": "吉田真也：Geometria 極簡幾何立燈", "img": "https://www.aesence.com/wp-content/uploads/2023/05/geometria-light-shinya-yoshida-01-770x513.jpg", "desc_en": "Tokyo designer explores mathematical symmetry and optical diffusion through anodized aluminum and slender LED strips.", "desc_zh": "東京設計師以陽極氧化鋁材與極細 LED 導光構件，展現數學對稱性與光影漫射的詩意結合。", "tag": "Lighting"}, {"id": "nocta-table-lamp", "category_en": "LIGHTING DESIGN", "category_zh": "燈具設計", "title_en": "Nocta Table Lamp by Denis Castaing", "title_zh": "Denis Castaing：Nocta 夜境桌燈", "img": "https://www.aesence.com/wp-content/uploads/2023/09/Nocta-table-lamp-Denis-Castaing-aesence-01-770x513.jpg", "desc_en": "A monolithic presence crafted in darkened cast aluminum, shedding an ambient downward glow reminiscent of twilight.", "desc_zh": "以暗色鑄鋁打造的沉穩量體，向下投射宛若黃昏微光的柔和氛圍，體現雕塑與實用光源的交融。", "tag": "Lighting"}];
+    let currentLang = 'en';
+
+    // Toggle Language
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.querySelectorAll('.lang-text').forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) el.textContent = text;
+      });
+      
+      const langBtn = document.getElementById('langSwitchBtn');
+      const drawerLangBtn = document.getElementById('drawerLangBtn');
+      if (lang === 'en') {
+        langBtn.textContent = '繁中';
+        drawerLangBtn.textContent = '切換至 繁體中文';
+      } else {
+        langBtn.textContent = 'EN';
+        drawerLangBtn.textContent = 'Switch to English';
+      }
+    }
+
+    document.getElementById('langSwitchBtn').addEventListener('click', () => {
+      setLanguage(currentLang === 'en' ? 'zh' : 'en');
+    });
+
+    document.getElementById('drawerLangBtn').addEventListener('click', () => {
+      setLanguage(currentLang === 'en' ? 'zh' : 'en');
+      toggleDrawer();
+    });
+
+    // Reader Modal
+    function openArticle(id) {
+      const art = articlesData.find(a => a.id === id);
+      if (!art) return;
+      document.getElementById('modalMeta').textContent = currentLang === 'zh' ? art.category_zh : art.category_en;
+      document.getElementById('modalTitle').textContent = currentLang === 'zh' ? art.title_zh : art.title_en;
+      document.getElementById('modalImg').src = art.img;
+      document.getElementById('modalBody').innerHTML = `<p>${currentLang === 'zh' ? art.desc_zh : art.desc_en}</p>
+      <p style="margin-top:20px; color:#666;">${currentLang === 'zh' ? 'ANLEE 策展評論：此作品體現了極簡美學對純粹性與材料真實性的堅持，在當代喧囂中構建出一片沉靜而深遠的心靈留白。' : 'ANLEE Curatorial Reflection: This work embodies an uncompromising commitment to material authenticity and quiet spatial contemplation, offering a profound sanctuary of reduction amidst contemporary noise.'}</p>`;
+      document.getElementById('articleModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeArticle() {
+      document.getElementById('articleModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('articleModal').addEventListener('click', (e) => {
+      if (e.target.id === 'articleModal') closeArticle();
+    });
+
+    // Drawer Menu
+    function toggleDrawer() {
+      document.getElementById('mobileDrawer').classList.toggle('open');
+    }
+    document.getElementById('openDrawerBtn').addEventListener('click', toggleDrawer);
+
+    // Search Modal
+    const searchModal = document.getElementById('searchModal');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    function openSearch() {
+      searchModal.classList.add('active');
+      searchInput.value = '';
+      searchResults.innerHTML = '';
+      setTimeout(() => searchInput.focus(), 100);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSearch() {
+      searchModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('openSearchBtn').addEventListener('click', openSearch);
+
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) {
+        searchResults.innerHTML = '';
+        return;
+      }
+      const matches = articlesData.filter(a => 
+        a.title_en.toLowerCase().includes(q) || 
+        a.title_zh.includes(q) || 
+        a.desc_en.toLowerCase().includes(q) || 
+        a.desc_zh.includes(q) ||
+        a.category_en.toLowerCase().includes(q)
+      );
+      if (matches.length === 0) {
+        searchResults.innerHTML = `<li style="padding:20px 0; color:#888;">${currentLang === 'zh' ? '未找到符合的策展項目' : 'No curatorial works found'}</li>`;
+        return;
+      }
+      searchResults.innerHTML = matches.map(m => `
+        <li class="search-result-item" onclick="closeSearch(); openArticle('${m.id}')">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#888;">${currentLang === 'zh' ? m.category_zh : m.category_en}</div>
+          <h4 style="font-size:16px; font-weight:400; margin-top:4px;">${currentLang === 'zh' ? m.title_zh : m.title_en}</h4>
+        </li>
+      `).join('');
+    });
+
+    // Escape Key Handler
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeArticle();
+        closeSearch();
+      }
+    });
+  </script>
+</body>
+</html>
