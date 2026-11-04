@@ -1,78 +1,123 @@
-# AnLee 官方網站交接資料 V1.1 內容落實與全站重構手冊
+# AnLee 官方網站內容模組化架構與日常維護手冊 (V2.0)
 
 > **專案代號**：`anlee-design-portfolio`  
-> **依據標準**：依據使用者交辦之單一總控手冊《AnLee 官網交接資料總整 V1.1》（更新日期：2026-10-29）全面重構與內容落實。  
-> **視覺基準**：深度對標國際極簡刊物 [Aesence](https://www.aesence.com/) 之 50/50 左右半剖（Split-screen layout）、中軸雙色跨界導覽、Inter 當代無襯線字體與大負空間閱讀節奏。
+> **核心目標**：維持視覺與互動 100% 像素級一致（Pixel-perfect Consistency），徹底解除單一臃腫檔案（單一 index.html 90KB）綁定，重構為語意分明、職責分離的模組化資料夾架構，方便崔董針對不同區塊獨立進行日常內容維護。  
+> **設計對標**：深度對標國際極簡刊物 [Aesence](https://www.aesence.com/) 之 50/50 左右半剖（Split-screen layout）、中軸雙色跨界導覽、Inter 當代無襯線字體與大負空間閱讀節奏。  
+> **交接標準**：全面落實《AnLee 官網交接資料總整 V1.1》規範（無個人照片、禁止 Interviews/Newsletter、繁中/英雙語對照、嚴格 6 大首頁區塊、真實可查證場館）。
 
 ---
 
-## 一、 官網交接手冊 V1.1 核心規格落實清單
+## 一、 模組化資料夾架構分佈
 
-本版全面依據交接手冊規範，清除了先前參考 Aesence 樣板中的未確認或多餘單元，全面替換為 AnLee 專屬品牌資產與規範架構：
+全站採用純前端原生架構（Zero-build Vanilla Static Site，相容 GitHub Pages），檔案分佈與職責如下：
 
-| 項目 | 交接手冊 V1.1 規格要求 | 實作落實情況 |
-| :--- | :--- | :--- |
-| **品牌識別** | 對外名稱為 **AnLee**，不使用中文品牌名稱；文字標誌簡潔呈現。 | 全站頂部中軸線呈現 `A N L E E`，頁尾及版權統一標示 AnLee，無任何中文品牌名稱。 |
-| **核心原則與世界觀** | 原則：**直覺、真實、極簡**；世界觀：**光、生活、尊重、減法**。 | 融入 Hero 左下垂直邊欄（`LIGHT · LIFE · RESPECT · REDUCTION`）、策展引言與 About 核心理念。 |
-| **雙語切換** | 繁體中文與英文雙語並存，主要預設語言待定。 | 頂部導覽列配置 `[ EN / 中文 ]` 即時切換按鈕，全站導覽、標題、摘要、內文閱讀彈窗、展訊及理念均支援中英即時切換。 |
-| **首頁區塊順序 (嚴格)** | 1. Articles<br>2. Art<br>3. Design<br>4. Exhibitions<br>5. Essays & Editorials<br>6. About AnLee | 嚴格依循手冊規範排列，徹底移除無關區塊，重塑清晰的閱讀層次。 |
-| **功能與單元禁令** | **嚴格禁止加入 Interviews，禁止加入 Newsletter**，不得自行增加未確認功能。 | 徹底移除前版的 Interviews（對話訪談）與 Newsletter（Curated Dispatch 訂閱），確保網站架構 100% 符規。 |
-| **文章固定三類** | 僅使用三類：**Art**、**Design**、**Essays & Editorials**。 | 完整收錄此三類專屬文章，具備內部專案識別碼（如 `AL-DES-001`、`AL-ART-001`、`AL-ESS-001`）。 |
-| **About 頁面規範** | **不使用 Sharon 個人照片**；採用已確認簡介，不編造年資、客戶、專案成果或獎項。 | 嚴格遵守禁令，改以空間光影與材質局部照呈現；簡介逐字採用已確認之版本，絕無誇大自我宣稱。 |
-| **展覽與地圖規範** | 僅收錄實際存在且資訊可查證之展館，不編造虛構展覽或偽稱自辦展覽；地圖不放未確認之私人地址。 | 收錄北美館 (TFAM)、當代館 (MOCA Taipei)、忠泰美術館 (Jut Art Museum) 等真實展訊與可查證經緯度座標。 |
-| **聯絡與社群** | 公開信箱為 `sha2003ron@gmail.com`；社群待使用者提供正式帳號，不得猜測或自行建立。 | 頁尾與聯絡彈窗固定為該信箱，Instagram 標記為「待官方發布（Coming Soon）」，絕不捏造社群網址。 |
-| **Privacy / Imprint** | 可先建立頁面位置或待確認版型；不得填入虛構公司或統一編號。 | 建立符合極簡美學之 Policy 彈窗版型，明確標記為待確認規格，合規安全。 |
-
----
-
-## 二、 頁面結構與內容規劃
-
-### 1. 首頁 100vh 左右雙欄半剖 (Split-Screen Hero)
-- **左側 50% 負空間**：大面積純白留白，垂直居中配置分類標籤 `Essays & Perspectives`、主標題《光與生活的減法節奏 – 在空間與日常中探尋本質》以及核心簡介。
-- **左下邊緣**：垂直旋轉 90 度品牌關鍵詞 `LIGHT · LIFE · RESPECT · REDUCTION`，傳遞建築級寧靜感。
-- **右側 50% 滿版攝影**：高解析度空間微水泥與日光漫射主視覺，點擊可直接開啟深度閱讀。
-
-### 2. 核心策展引言 (Curatorial Statement)
-> 「設計不應製造距離，而應幫助人理解彼此；在光、生活、尊重與減法之中，探尋空間如何真實回應日常。」  
-> *— ANLEE CORE PERSPECTIVES*
-
-### 3. 首頁 6 大依序區塊內容
-1. **Articles 精選文章**：
-   - `AL-DES-001`《日光與微水泥的減法寓所：24坪現代極簡空間的本質對話》
-   - `AL-ESS-001`《設計不應製造距離：從少數人的展示回歸真實生活的包容》
-2. **Art 藝術觀點**：
-   - `AL-ART-001`《單色畫與留白的深層呼吸：在凝視中感受物質與心靈的共振》
-   - `AL-ART-002`《幾何結構與空間重力：雕塑中的力學與平衡思維》
-   - `AL-ART-003`《光影中的沉默感知：當代純粹繪畫的黑白階調與心靈回響》
-   - `AL-ART-004`《大地顏料與原始肌理：礦物、亞麻與觸覺記憶的交織》
-3. **Design 設計實踐**：
-   - `AL-DES-001`《日光與微水泥的減法寓所：24坪現代極簡空間的本質對話》
-   - `AL-DES-002`《家具與日常觸感的對話：在天然材料中重構生活節奏》
-   - `AL-DES-003`《留白中的光線編排：消隱燈具與自然天光的和諧共存》
-   - `AL-DES-004`《商業空間的安靜力量：從飽和刺激回歸沉著質感的規劃思維》
-4. **Exhibitions 展覽資訊**：
-   - 橫向日曆表格，真實展訊與場館（北美館、當代館、台灣設計館、忠泰美術館）。
-5. **Essays & Editorials 觀點專題**：
-   - `AL-ESS-001`《設計不應製造距離：從少數人的展示回歸真實生活的包容》
-   - `AL-ESS-002`《生活的減法不是空無，而是讓光與思考重新走入日常》
-   - `AL-ESS-003`《尊重材料的原始語言：在水泥、木頭與石材中看見真實》
-   - `AL-ESS-004`《直覺作為設計的起點：當我們放下理論，身體如何感知空間？》
-6. **About AnLee 品牌與創辦實踐**：
-   - 引用已確認簡介：
-     > 「Sharon（李惠雲）長期從事室內設計，經歷跨國設計、家具工廠經營與商業空間規劃。她關注空間如何回應生活，也持續探索藝術、設計與日常之間的關係。」
-   - 核心原則標章：`INTUITION 直覺`、`AUTHENTICITY 真實`、`MINIMALISM 極簡`。
-   - 搭配純粹空間光影攝影，恪守「不使用個人照片」規範。
+```text
+anlee-design-portfolio/
+├── index.html                   # 簡潔純淨的首頁骨架（清晰標記各區塊，語意化引入模組）
+├── README.md                    # 本專案模組化架構說明與日常維護手冊
+├── css/                         # 視覺樣式模組目錄
+│   ├── base.css                 # 基礎樣式：字型引入、:root 色彩變數、重置樣式、通用 Typography
+│   ├── layout.css               # 框架佈局：Masthead 頂部導航、50/50 Hero 左右分割、Statement 宣言、Footer 頁尾
+│   ├── sections.css             # 內容區塊：Articles, Art, Design, Exhibitions, Essays, About, Map
+│   ├── components.css           # 互動元件：文章閱讀彈窗、地圖彈窗、條款彈窗、全站搜尋面板、手機側欄抽屜
+│   └── style.css                # 樣式總入口（聚合引入上述 4 支樣式）
+└── js/                          # 程式腳本與內容資料庫目錄
+    ├── app.js                   # 全站互動邏輯：中英雙語即時切換、Modal 彈窗開關、即時搜尋引擎、鍵盤事件
+    └── data/                    # ★ 內容維護核心目錄（崔董日常更新內容請直接編輯此處檔案）
+        ├── hero.js              # 首頁 Hero 模組：頭圖連結、主標題、副標題導言、品牌世界觀關鍵字（雙語）
+        ├── design.js            # Design 區塊資料庫：收錄 AL-DES-001 ~ 004 專案圖文、規格與雙語內文
+        ├── art.js               # Art 區塊資料庫：收錄 AL-ART-001 ~ 004 藝術觀察與雙語內文
+        ├── essays.js            # Essays 區塊資料庫：收錄 AL-ESS-001 ~ 004 觀點專題與雙語內文
+        ├── exhibitions.js       # Exhibitions 展覽資料庫：TFAM、MOCA、Jut Art Museum 等真實美術館展訊
+        ├── about.js             # About 品牌模組：Sharon 簡介、三大核心原則、引言與空間光影攝影
+        └── i18n.js              # 全站雙語辭典：導航標籤、頁尾版權、政策條款、按鈕等通用詞庫
+```
 
 ---
 
-## 三、 技術與互動規格
+## 二、 崔董日常維護指南（如何針對不同區塊維護內容）
 
-1. **純前端單頁架構 (Zero Dependencies)**：
-   - 原生 HTML5 / CSS3 / ES6+，相容所有現代瀏覽器與行動裝置。
-2. **多維互動系統**：
-   - **Reader Modal**：點擊卡片沉浸式開啟文章閱讀面板，支援完整排版與中英雙語對照。
-   - **Search Modal**：點擊導覽列放大鏡，支援文章編號、標題、分類與內文的即時過濾檢索。
-   - **Venue Map Modal**：點擊查看真實展覽館舍與官方經緯度。
-   - **Mobile Drawer**：行動裝置側滑抽屜導覽。
-3. **驗證與相容性**：
-   - 通過無頭 Chrome 於 1440px (Desktop)、1024px (Tablet)、390px (Mobile) 完整視窗渲染與截圖驗證，無破版或字體擠壓。
+### 1. 維護首頁「頭圖 + 文案 + 核心關鍵字」
+- **操作檔案**：`js/data/hero.js`
+- **維護方式**：
+  直接在 `heroData` 物件中替換圖片連結或修改文案：
+  ```javascript
+  const heroData = {
+    // 更換首頁右側 50% 滿版大圖
+    image: 'https://你的新圖片網址',
+
+    // 替換左下角垂直旋轉 90 度的品牌關鍵字
+    verticalKeywords: 'LIGHT · LIFE · RESPECT · REDUCTION',
+
+    // 替換首頁大標題（支援 <br> 換行）
+    title: {
+      tc: '光與生活的減法節奏 –<br>在空間與日常中探尋本質',
+      en: 'The Rhythm of Light & Reduction –<br>Exploring the Essence of Space'
+    },
+
+    // 替換首頁導言
+    description: {
+      tc: 'AnLee 是一個分享藝術與設計觀點、文化觀察及思想的平台...',
+      en: 'AnLee is a curatorial platform sharing perspectives...'
+    }
+  };
+  ```
+
+---
+
+### 2. 維護「Design 設計」區塊專案與文章
+- **操作檔案**：`js/data/design.js`
+- **維護方式**：
+  直接在 `designArticles` 中修改現有專案，或仿照格式新增一筆專案（如 `'des-005'`）：
+  ```javascript
+  'des-005': {
+    category: 'Design',
+    id_badge: 'AL-DES-005',
+    title_tc: '山形與水景的過渡寓所：現代居所中的流暢動線',
+    title_en: 'Mountain & Water Residence: Fluid Circulation in Living Space',
+    img: 'https://圖片網址',
+    excerpt_tc: '卡片摘要文字（繁中）...',
+    excerpt_en: 'Card excerpt in English...',
+    body_tc: `
+      <p>完整的長篇內文段落...</p>
+      <p><strong>專案規格：</strong> 30 坪 / 實木與自然石材。</p>
+    `,
+    body_en: `
+      <p>Full article paragraph in English...</p>
+    `
+  }
+  ```
+  *(同理：`Art` 區塊請編輯 `js/data/art.js`；`Essays` 區塊請編輯 `js/data/essays.js`)*
+
+---
+
+### 3. 維護「Exhibitions 展覽資訊」
+- **操作檔案**：`js/data/exhibitions.js`
+- **維護方式**：
+  在 `exhibitionsDB` 中更新檔期或新增真實美術館展訊：
+  ```javascript
+  'ex-05': {
+    title_tc: '光之棲所：當代居住哲學專題展',
+    title_en: 'Habitations of Light: Architectural Luminosity',
+    venue_tc: '台北市立美術館 (TFAM) ↗',
+    venue_en: 'Taipei Fine Arts Museum (TFAM) ↗',
+    date: '2027.03.01 – 2027.06.30',
+    desc_tc: '展覽論述與說明摘要...',
+    desc_en: 'Exhibition statement in English...'
+  }
+  ```
+
+---
+
+### 4. 維護「About AnLee 品牌理念」
+- **操作檔案**：`js/data/about.js`
+- **維護方式**：
+  修改創辦實踐簡介、引言金句或三大原則，純文字修改不影響任何頁面版型。
+
+---
+
+### 5. 維護「視覺樣式與版面排版」
+- **字型、色彩變數、間距基準**：編輯 `css/base.css` 的 `:root` 變數。
+- **頂部導覽列、Hero 左右剖分、頁尾**：編輯 `css/layout.css`。
+- **文章卡片、網格排列、展覽表格**：編輯 `css/sections.css`。
+- **文章彈窗、全站搜尋面板、手機側抽屜**：編輯 `css/components.css`。

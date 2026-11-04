@@ -1,0 +1,52 @@
+/* =========================================================
+   BASE STYLES: Variables, Typography & Global Resets
+   ========================================================= */
+:root {
+  --bg: #ffffff;
+  --text-black: #111111;
+  --text-white: #ffffff;
+  --text-muted: #767676;
+  --text-light-muted: #9e9e9e;
+  --border-hairline: #e8e8e8;
+  --font-en: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-tc: 'Noto Sans TC', 'Inter', -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-tc);
+  background-color: var(--bg);
+  color: var(--text-black);
+  line-height: 1.6;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+body.lang-en {
+  font-family: var(--font-en);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
