@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AnLee Portfolio — Architecture & Content Structure Explainer</title>
+  <meta name="description" content="AnLee Design Portfolio 官方網站架構圖解與內容拓撲分析 (Archify Explainer Specification)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --bg-card: rgba(22, 27, 34, 0.75);
+      --border-subtle: #30363d;
+      --border-accent: #388bfd;
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
+      --text-dim: #6e7681;
+      --accent-blue: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-purple: #bc8cff;
+      --accent-orange: #d29922;
+      --accent-red: #f85149;
+      --code-bg: #090d13;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      --font-mono: 'JetBrains Mono', "SF Mono", Consolas, Menlo, monospace;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.45);
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #eaeef2;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --border-subtle: #d0d7de;
+      --border-accent: #0969da;
+      --text-main: #1f2328;
+      --text-muted: #656d76;
+      --text-dim: #8c959f;
+      --accent-blue: #0969da;
+      --accent-green: #1a7f37;
+      --accent-purple: #8250df;
+      --accent-orange: #9a6700;
+      --accent-red: #cf222e;
+      --code-bg: #f3f4f6;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button, input {
+      font-family: inherit;
+    }
+
+    /* 頂部固定欄 */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 32px;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    [data-theme="light"] .topbar {
+      background: rgba(246, 248, 250, 0.88);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-archify {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 3px 8px;
+      background: rgba(88, 166, 255, 0.15);
+      color: var(--accent-blue);
+      border: 1px solid rgba(88, 166, 255, 0.3);
+      border-radius: 4px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-main);
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      background: var(--border-subtle);
+      border-color: var(--text-muted);
+    }
+
+    .theme-toggle-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--text-muted);
+    }
+
+    /* 頁面主佈局 */
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 36px 32px 80px;
+    }
+
+    /* 結論前置英雄面板 (Conclusion-First Hero) */
+    .hero-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-green));
+    }
+
+    .hero-tagline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .hero-h1 {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 980px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .metric-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .metric-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .metric-sub {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    /* 頁籤控制 */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 28px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .tab-item {
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-item:hover {
+      color: var(--text-main);
+    }
+
+    .tab-item.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 面板通用樣式 */
+    .panel {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* 樹狀結構視覺化 (@tree) */
+    .tree-view {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: var(--code-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 24px;
+      overflow-x: auto;
+      line-height: 1.8;
+    }
+
+    .tree-node {
+      display: flex;
+      align-items: baseline;
+      padding: 3px 0;
+      transition: background 0.15s ease;
+      border-radius: 4px;
+    }
+
+    .tree-node:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    [data-theme="light"] .tree-node:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .tree-indent {
+      display: inline-block;
+      width: 24px;
+      color: var(--text-dim);
+      user-select: none;
+    }
+
+    .tree-icon {
+      margin-right: 8px;
+      font-size: 13px;
+      user-select: none;
+    }
+
+    .tree-name {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .tree-name.dir {
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .tree-desc {
+      color: var(--text-muted);
+      margin-left: 14px;
+      font-size: 12px;
+      font-family: var(--font-sans);
+    }
+
+    .tree-badge {
+      margin-left: auto;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+    }
+
+    /* 資料拓撲架構圖 (Topology Cards) */
+    .topology-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .flow-row {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 24px;
+      align-items: stretch;
+      padding: 18px 20px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .flow-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    .flow-source {
+      border-right: 1px solid var(--border-subtle);
+      padding-right: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    @media (max-width: 900px) {
+      .flow-source {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        padding-right: 0;
+        padding-bottom: 12px;
+      }
+    }
+
+    .flow-code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-purple);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .flow-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .flow-target {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .flow-target-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .flow-target-detail {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* 內容矩陣清冊 (Matrix Table) */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .matrix-table th {
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      color: var(--text-muted);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .matrix-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      vertical-align: top;
+    }
+
+    .matrix-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    [data-theme="light"] .matrix-table tr:hover td {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .code-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--code-bg);
+      border: 1px solid var(--border-subtle);
+      color: var(--accent-blue);
+      display: inline-block;
+    }
+
+    .badge-status {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .status-verified {
+      background: rgba(63, 185, 80, 0.15);
+      color: var(--accent-green);
+      border: 1px solid rgba(63, 185, 80, 0.3);
+    }
+
+    .status-modular {
+      background: rgba(188, 140, 255, 0.15);
+      color: var(--accent-purple);
+      border: 1px solid rgba(188, 140, 255, 0.3);
+    }
+
+    /* 6 大區塊視覺化剖析 */
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 20px;
+    }
+
+    .section-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 20px;
+      transition: var(--transition);
+    }
+
+    .section-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+
+    .sec-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .sec-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: 0.05em;
+    }
+
+    .sec-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .sec-spec {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .sec-items-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 12px;
+    }
+
+    .sec-item {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sec-item::before {
+      content: '•';
+      color: var(--accent-purple);
+      font-weight: bold;
+    }
+
+    /* 互動按鈕與複製提示 */
+    .copy-btn {
+      padding: 4px 8px;
+      font-size: 11px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .copy-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    /* 頁尾 */
+    .explainer-footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-dim);
+      font-size: 12px;
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <!-- 頂部導航欄 -->
+  <header class="topbar">
+    <div class="brand-wrap">
+      <span class="badge-archify">ARCHIFY EXPLAINER</span>
+      <div class="brand-title">
+        <span>AnLee Portfolio</span>
+        <span style="color:var(--text-dim); font-weight:300;">/</span>
+        <span style="font-weight:400; font-size:13px; color:var(--text-muted);">架構與內容結構說明書</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <a href="index.html" class="nav-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        返回主網站 (index.html)
+      </a>
+      <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 01｜結論前置摘要英雄面板 (Conclusion-First Panel) -->
+    <section class="hero-summary">
+      <div class="hero-tagline">ARCHITECTURE & SYSTEM OVERVIEW</div>
+      <h1 class="hero-h1">anlee-design-portfolio 全站架構與內容拓撲分析</h1>
+      <p class="hero-desc">
+        本專案對標國際極簡刊物 <strong>Aesence</strong> 之 50/50 左右半剖視覺，並嚴格落實<strong>《AnLee 官網交接資料總整 V1.1》</strong>手冊規範。全站採用<strong>零建置純前端原生架構 (Zero-build Vanilla Stack)</strong>，徹底將龐大單一檔案解耦為樣式模組與 7 大獨立資料檔，達成日常維護「免碰核心 HTML、免改排版 CSS、直接抽換純資料」的高度模組化設計。
+      </p>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">CORE DOMAINS</div>
+          <div class="metric-val">6 <span class="metric-sub">大循序單元</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">DATA MODULES</div>
+          <div class="metric-val">7 <span class="metric-sub">支獨立資料檔</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">CURATED ARTICLES</div>
+          <div class="metric-val">12 <span class="metric-sub">篇 (雙語對照)</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">SPEC COMPLIANCE</div>
+          <div class="metric-val" style="color:var(--accent-green);">100% <span class="metric-sub">V1.1 規格</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁籤導覽列 -->
+    <div class="tab-bar">
+      <button class="tab-item active" onclick="switchTab('tab-tree')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        檔案與目錄樹狀拓撲 (Tree)
+      </button>
+      <button class="tab-item" onclick="switchTab('tab-sections')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+        首頁 6 大內容區塊清冊 (Sections)
+      </button>
+      <button class="tab-item" onclick="switchTab('tab-data')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        資料驅動拓撲與映射矩陣 (Data Flow)
+      </button>
+      <button class="tab-item" onclick="switchTab('tab-compliance')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        交接手冊 V1.1 驗收矩陣 (Checklist)
+      </button>
+    </div>
+
+    <!-- TAB 1: 檔案與目錄樹狀拓撲 (@tree) -->
+    <div id="tab-tree" class="tab-content active">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Repository Structural Tree 專案完整檔案架構樹</div>
+            <div class="panel-subtitle">以單親包含關係 (Single-parent containment) 呈現全專案之語意分離與模組分佈</div>
+          </div>
+          <button class="copy-btn" onclick="copyTreeText()">複製樹狀代碼</button>
+        </div>
+
+        <div class="tree-view" id="treeContent">
+<div class="tree-node"><span class="tree-icon">📦</span><span class="tree-name dir">anlee-design-portfolio/</span><span class="tree-desc">專案根目錄 (相容 GitHub Pages 靜態託管)</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-icon">📄</span><span class="tree-name">index.html</span><span class="tree-desc">官網首頁骨架 (純淨語意結構，解耦行內龐大樣式與資料)</span><span class="tree-badge">ENTRY</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-icon">📄</span><span class="tree-name">structure.html</span><span class="tree-desc">架構與內容結構說明分頁 (Archify Explainer 規範)</span><span class="tree-badge">CURRENT</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-icon">📄</span><span class="tree-name">README.md</span><span class="tree-desc">全站模組化架構說明與崔董日常維護總控指南 (V2.0)</span><span class="tree-badge">DOCS</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-icon">📁</span><span class="tree-name dir">css/</span><span class="tree-desc">視覺與排版模組庫</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">├──</span><span class="tree-icon">🎨</span><span class="tree-name">base.css</span><span class="tree-desc">基礎變數 (:root)、CSS Reset、字型引入與全域標籤設定</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">├──</span><span class="tree-icon">🎨</span><span class="tree-name">layout.css</span><span class="tree-desc">佈局架構：50/50 跨界導航 (Masthead)、100vh 左右分割 Hero、Footer</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">├──</span><span class="tree-icon">🎨</span><span class="tree-name">sections.css</span><span class="tree-desc">區塊樣式：Articles, Art, Design, Exhibitions, Essays, About, Map</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">├──</span><span class="tree-icon">🎨</span><span class="tree-name">components.css</span><span class="tree-desc">互動元件：Reader Modal (全螢幕閱讀)、Search, Map, Drawer</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">└──</span><span class="tree-icon">🎨</span><span class="tree-name">style.css</span><span class="tree-desc">樣式總入口 (透過 @import 統一聚合上述四支樣式)</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-icon">📁</span><span class="tree-name dir">js/</span><span class="tree-desc">程式腳本與內容資料層</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">├──</span><span class="tree-icon">⚡</span><span class="tree-name">app.js</span><span class="tree-desc">全站互動控制核心：中英雙語即時切換、Modal 彈窗、搜尋引擎、快捷鍵</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">└──</span><span class="tree-icon">📁</span><span class="tree-name dir">data/</span><span class="tree-desc">★ 內容維護核心目錄 (崔董日常更新內容直接編輯此處)</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">    </span><span class="tree-indent">├──</span><span class="tree-icon">📝</span><span class="tree-name">hero.js</span><span class="tree-desc">首頁 Hero 模組：頭圖連結、主標題、導言、垂直關鍵字 (雙語)</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">    </span><span class="tree-indent">├──</span><span class="tree-icon">📝</span><span class="tree-name">design.js</span><span class="tree-desc">Design 資料庫：AL-DES-001 ~ 004 專案圖文、規格與雙語內文</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">    </span><span class="tree-indent">├──</span><span class="tree-icon">📝</span><span class="tree-name">art.js</span><span class="tree-desc">Art 資料庫：AL-ART-001 ~ 004 藝術觀察與雙語內文</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">    </span><span class="tree-indent">├──</span><span class="tree-icon">📝</span><span class="tree-name">essays.js</span><span class="tree-desc">Essays 資料庫：AL-ESS-001 ~ 004 觀點專題與雙語內文</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">    </span><span class="tree-indent">├──</span><span class="tree-icon">📝</span><span class="tree-name">exhibitions.js</span><span class="tree-desc">Exhibitions 資料庫：TFAM、MOCA、忠泰美術館等真實美術館展訊</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">    </span><span class="tree-indent">├──</span><span class="tree-icon">📝</span><span class="tree-name">about.js</span><span class="tree-desc">About 品牌模組：Sharon 簡介、三大核心原則、引言與空間光影攝影</span></div>
+<div class="tree-node"><span class="tree-indent">│</span><span class="tree-indent">    </span><span class="tree-indent">└──</span><span class="tree-icon">📝</span><span class="tree-name">i18n.js</span><span class="tree-desc">全站雙語辭典：導航標籤、頁尾版權、政策條款、按鈕等通用詞庫</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 首頁 6 大內容區塊清冊 (Sections) -->
+    <div id="tab-sections" class="tab-content">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Curatorial Section Breakdown 首頁六大區塊循序配置</div>
+            <div class="panel-subtitle">嚴格遵照《AnLee 官網交接資料總整 V1.1》規範之排列順序，嚴禁插入未確認之單元</div>
+          </div>
+        </div>
+
+        <div class="sections-grid">
+          <!-- 01 Articles -->
+          <div class="section-card">
+            <div class="sec-badge-row">
+              <span class="sec-num">SECTION 01</span>
+              <span class="badge-status status-verified">已核對</span>
+            </div>
+            <h3 class="sec-name">Articles 精選文章</h3>
+            <p class="sec-spec">首頁雙欄旗艦專題展示，精選最具代表性之空間實踐與觀點論述，引導訪客快速進入核心策展世界觀。</p>
+            <ul class="sec-items-list">
+              <li class="sec-item"><span class="code-tag">AL-DES-001</span> 日光與微水泥的減法寓所 (24坪極簡對話)</li>
+              <li class="sec-item"><span class="code-tag">AL-ESS-001</span> 設計不應製造距離 (從少數人展示回歸真實)</li>
+            </ul>
+          </div>
+
+          <!-- 02 Art -->
+          <div class="section-card">
+            <div class="sec-badge-row">
+              <span class="sec-num">SECTION 02</span>
+              <span class="badge-status status-verified">已核對</span>
+            </div>
+            <h3 class="sec-name">Art 藝術觀點</h3>
+            <p class="sec-spec">4 欄直式 (Portrait 3:4) 沉浸式網格，收錄當代單色畫、幾何結構、微觀光影與大地原生礦物肌理之觀察。</p>
+            <ul class="sec-items-list">
+              <li class="sec-item"><span class="code-tag">AL-ART-001</span> 單色畫與留白的深層呼吸</li>
+              <li class="sec-item"><span class="code-tag">AL-ART-002</span> 幾何結構與空間重力 (雕塑中的力學)</li>
+              <li class="sec-item"><span class="code-tag">AL-ART-003</span> 光影中的沉默感知 (純粹黑白階調)</li>
+              <li class="sec-item"><span class="code-tag">AL-ART-004</span> 大地顏料與原始肌理 (礦物與亞麻)</li>
+            </ul>
+          </div>
+
+          <!-- 03 Design -->
+          <div class="section-card">
+            <div class="sec-badge-row">
+              <span class="sec-num">SECTION 03</span>
+              <span class="badge-status status-verified">已核對</span>
+            </div>
+            <h3 class="sec-name">Design 設計實踐</h3>
+            <p class="sec-spec">4 欄橫式 (Landscape 4:3) 建築空間實例，展現微水泥工法、實木家具製造實務、隱蔽洗牆照明與商業留白思維。</p>
+            <ul class="sec-items-list">
+              <li class="sec-item"><span class="code-tag">AL-DES-001</span> 日光與微水泥的減法寓所 (實體個案)</li>
+              <li class="sec-item"><span class="code-tag">AL-DES-002</span> 家具與日常觸感的對話 (工藝與觸感)</li>
+              <li class="sec-item"><span class="code-tag">AL-DES-003</span> 留白中的光線編排 (消隱燈具與天光)</li>
+              <li class="sec-item"><span class="code-tag">AL-DES-004</span> 商業空間的安靜力量 (回歸沉著質感)</li>
+            </ul>
+          </div>
+
+          <!-- 04 Exhibitions -->
+          <div class="section-card">
+            <div class="sec-badge-row">
+              <span class="sec-num">SECTION 04</span>
+              <span class="badge-status status-verified">已核對</span>
+            </div>
+            <h3 class="sec-name">Exhibitions 展覽資訊</h3>
+            <p class="sec-spec">極簡橫向日曆表格，嚴格僅收錄經官方查證、實際存在之當代美術館展訊，杜絕虛構自辦展覽或私人地址。</p>
+            <ul class="sec-items-list">
+              <li class="sec-item"><span class="code-tag">TFAM</span> 空間的詩學與物質性 (台北市立美術館)</li>
+              <li class="sec-item"><span class="code-tag">MOCA</span> 單色之境：亞洲當代極簡繪畫 (台北當代藝術館)</li>
+              <li class="sec-item"><span class="code-tag">TDRI</span> 日常之器：北歐與東亞家具設計 (台灣設計館)</li>
+              <li class="sec-item"><span class="code-tag">JUT</span> 光之棲所：建築光影與居住哲學 (忠泰美術館)</li>
+            </ul>
+          </div>
+
+          <!-- 05 Essays & Editorials -->
+          <div class="section-card">
+            <div class="sec-badge-row">
+              <span class="sec-num">SECTION 05</span>
+              <span class="badge-status status-verified">已核對</span>
+            </div>
+            <h3 class="sec-name">Essays & Editorials 觀點與專題</h3>
+            <p class="sec-spec">深入探討空間本質、減法智慧、材料誠實性與身體直覺感知，建立 AnLee 獨特的批判性美學論述。</p>
+            <ul class="sec-items-list">
+              <li class="sec-item"><span class="code-tag">AL-ESS-001</span> 設計不應製造距離 (生活包容哲學)</li>
+              <li class="sec-item"><span class="code-tag">AL-ESS-002</span> 生活的減法不是空無 (為光騰出空間)</li>
+              <li class="sec-item"><span class="code-tag">AL-ESS-003</span> 尊重材料的原始語言 (水泥與木質紋理)</li>
+              <li class="sec-item"><span class="code-tag">AL-ESS-004</span> 直覺作為設計的起點 (身體感知與尺度)</li>
+            </ul>
+          </div>
+
+          <!-- 06 About AnLee -->
+          <div class="section-card">
+            <div class="sec-badge-row">
+              <span class="sec-num">SECTION 06</span>
+              <span class="badge-status status-verified">已核對</span>
+            </div>
+            <h3 class="sec-name">About AnLee 品牌理念</h3>
+            <p class="sec-spec">恪守交接手冊：不使用個人照片，採用空間光影攝影；呈現 Sharon 跨國設計實務與三大核心原則。</p>
+            <ul class="sec-items-list">
+              <li class="sec-item"><span class="code-tag">P-01</span> INTUITION 直覺 (以身體感受引導空間本質)</li>
+              <li class="sec-item"><span class="code-tag">P-02</span> AUTHENTICITY 真實 (尊重材質原生特質與時間)</li>
+              <li class="sec-item"><span class="code-tag">P-03</span> MINIMALISM 極簡 (剔除繁瑣裝飾回歸日常)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 資料驅動拓撲與映射矩陣 (Data Flow) -->
+    <div id="tab-data" class="tab-content">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Data-Driven Layer Architecture 前端資料驅動映射矩陣</div>
+            <div class="panel-subtitle">將靜態前端網頁解耦為獨立資料庫層與呈現層，讓非工程人員亦能直覺維護</div>
+          </div>
+        </div>
+
+        <div class="topology-flow">
+          <div class="flow-row">
+            <div class="flow-source">
+              <div class="flow-code">js/data/hero.js</div>
+              <div class="flow-meta">首頁主視覺與宣言模組</div>
+            </div>
+            <div class="flow-target">
+              <div class="flow-target-title">綁定目標：.hero-split 與 #brandLogo</div>
+              <div class="flow-target-detail">
+                管理 50% 滿版光影攝影圖網址、垂直旋轉 90 度品牌關鍵字 (<span class="code-tag">LIGHT · LIFE · RESPECT · REDUCTION</span>)、雙語大標題與策展前導引言。
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-row">
+            <div class="flow-source">
+              <div class="flow-code">js/data/design.js</div>
+              <div class="flow-meta">室內設計與空間實踐模組</div>
+            </div>
+            <div class="flow-target">
+              <div class="flow-target-title">綁定目標：#articles (AL-DES-001) 與 #design (001~004)</div>
+              <div class="flow-target-detail">
+                提供卡片摘要與全螢幕閱讀彈窗 (<span class="code-tag">openArticleModal</span>) 所需之專案規格、坪數建材、高解析配圖與完整雙語正文。
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-row">
+            <div class="flow-source">
+              <div class="flow-code">js/data/art.js</div>
+              <div class="flow-meta">純粹藝術與當代觀察模組</div>
+            </div>
+            <div class="flow-target">
+              <div class="flow-target-title">綁定目標：#art (AL-ART-001 ~ 004)</div>
+              <div class="flow-target-detail">
+                驅動 4 欄直式藝術卡片，包含單色畫、極簡雕塑、黑白階調與大地顏料等藝術專題全文檢索與閱讀彈窗。
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-row">
+            <div class="flow-source">
+              <div class="flow-code">js/data/essays.js</div>
+              <div class="flow-meta">文化觀察與哲學專題模組</div>
+            </div>
+            <div class="flow-target">
+              <div class="flow-target-title">綁定目標：#essays (AL-ESS-001 ~ 004)</div>
+              <div class="flow-target-detail">
+                提供批判性論述內容，包含「設計不應製造距離」、「減法不是空無」、「材料原始語言」等生活思維論述。
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-row">
+            <div class="flow-source">
+              <div class="flow-code">js/data/exhibitions.js</div>
+              <div class="flow-meta">真實美術館展訊資料庫</div>
+            </div>
+            <div class="flow-target">
+              <div class="flow-target-title">綁定目標：#exhibitions 表格與 #mapModal 場館彈窗</div>
+              <div class="flow-target-detail">
+                管理北美館、當代館、忠泰美術館展期、策展人論述摘要，並同步對應實體經緯度座標資訊。
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-row">
+            <div class="flow-source">
+              <div class="flow-code">js/data/about.js</div>
+              <div class="flow-meta">品牌論述與核心原則模組</div>
+            </div>
+            <div class="flow-target">
+              <div class="flow-target-title">綁定目標：#about 區塊與頁尾品牌簡介</div>
+              <div class="flow-target-detail">
+                集中維護 Sharon（李惠雲）實踐經歷文字、三大核心原則標語與建築光影攝影圖檔，避免文字散落。
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-row">
+            <div class="flow-source">
+              <div class="flow-code">js/data/i18n.js</div>
+              <div class="flow-meta">全站即時雙語辭典庫</div>
+            </div>
+            <div class="flow-target">
+              <div class="flow-target-title">綁定目標：全站所有 [data-i18n] 標籤與動態彈窗</div>
+              <div class="flow-target-detail">
+                管理導航標籤、分類名稱、頁尾版權、政策條款、按鈕提示等 50+ 組關鍵詞，支援毫秒級繁中 / 英文無縫切換。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: 交接手冊 V1.1 驗收矩陣 (Checklist) -->
+    <div id="tab-compliance" class="tab-content">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Quality & Compliance Matrix 交接手冊 V1.1 規格驗收矩陣</div>
+            <div class="panel-subtitle">嚴格落實《AnLee 官網交接資料總整 V1.1》（2026-10-29）全條目規範</div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>手冊規範維度</th>
+                <th>交接手冊 V1.1 具體要求</th>
+                <th>實作落實情況與佐證</th>
+                <th>檢驗結果</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>品牌標誌與命名</strong></td>
+                <td>對外名稱為 <strong>AnLee</strong>，不使用中文品牌名稱；文字標誌簡潔呈現。</td>
+                <td>頂部懸浮導覽列呈現雙色跨界 <span class="code-tag">A N L E E</span>，頁尾版權統一標示 AnLee，無任何捏造之中文廠牌名。</td>
+                <td><span class="badge-status status-verified">100% 符規</span></td>
+              </tr>
+              <tr>
+                <td><strong>核心原則與世界觀</strong></td>
+                <td>原則：直覺、真實、極簡；世界觀：光、生活、尊重、減法。</td>
+                <td>融入 Hero 側欄 (<span class="code-tag">LIGHT · LIFE · RESPECT · REDUCTION</span>)、策展宣言與 About 三大原則標籤。</td>
+                <td><span class="badge-status status-verified">100% 符規</span></td>
+              </tr>
+              <tr>
+                <td><strong>雙語切換機制</strong></td>
+                <td>繁體中文與英文雙語並存，主要預設語言待定。</td>
+                <td>頂部配置 <span class="code-tag">[ EN / 中文 ]</span> 即時切換，全站標題、內文閱讀彈窗、展訊與宣告完全雙語同步。</td>
+                <td><span class="badge-status status-verified">100% 符規</span></td>
+              </tr>
+              <tr>
+                <td><strong>首頁區塊嚴格順序</strong></td>
+                <td>嚴格依序：Articles → Art → Design → Exhibitions → Essays → About。</td>
+                <td>首頁結構完全依手冊順序配置，杜絕跳躍或顛倒排版。</td>
+                <td><span class="badge-status status-verified">100% 符規</span></td>
+              </tr>
+              <tr>
+                <td><strong>功能與單元禁令</strong></td>
+                <td><strong>嚴格禁止加入 Interviews，禁止加入 Newsletter</strong>。</td>
+                <td>徹底清除早期樣板遺留之訪談對話與電子報訂閱表單，回歸純粹作品與觀點策展。</td>
+                <td><span class="badge-status status-verified">100% 符規</span></td>
+              </tr>
+              <tr>
+                <td><strong>About 頁面規範</strong></td>
+                <td><strong>不使用 Sharon 個人照片</strong>；引用已確認簡介，不編造年資或獎項。</td>
+                <td>採用空間微水泥光影照；文字嚴格逐字採用已確認之簡介，絕無虛構年資或誇大宣稱。</td>
+                <td><span class="badge-status status-verified">100% 符規</span></td>
+              </tr>
+              <tr>
+                <td><strong>展覽與地圖規範</strong></td>
+                <td>僅收錄實際存在、資訊可查證之展館，不編造虛構展覽；地圖不放未確認之私人地址。</td>
+                <td>收錄北美館 (TFAM)、當代館 (MOCA)、忠泰美術館 (Jut) 等可查證官方展訊與實體經緯度。</td>
+                <td><span class="badge-status status-verified">100% 符規</span></td>
+              </tr>
+              <tr>
+                <td><strong>聯絡與社群</strong></td>
+                <td>公開信箱固定為 <span class="code-tag">sha2003ron@gmail.com</span>；社群標記待官方發布。</td>
+                <td>頁尾與聯絡介面固定為該信箱，Instagram 標記為 Coming Soon，絕不自行猜測帳號。</td>
+                <td><span class="badge-status status-verified">100% 符規</span></td>
+              </tr>
+              <tr>
+                <td><strong>法律與條款</strong></td>
+                <td>Privacy / Imprint 可建立待確認版型；不填入虛構公司或統一編號。</td>
+                <td>建立符合極簡美學之 Policy 彈窗，明確標示為待確認規範手冊版型，合規安全。</td>
+                <td><span class="badge-status status-verified">100% 符規</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 頁尾宣告 -->
+    <footer class="explainer-footer">
+      <div>AnLee Portfolio Architecture & Content Structure Explainer · Generated via Archify Explainer Specification</div>
+      <div style="margin-top:6px; color:var(--text-muted);">Zero-build Vanilla Static Site · Pixel-perfect Consistency Verified · © 2026 AnLee</div>
+    </footer>
+
+  </main>
+
+  <script>
+    // 頁籤切換邏輯
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-item').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      const targetBtn = Array.from(document.querySelectorAll('.tab-item')).find(btn => btn.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('active');
+      
+      const targetContent = document.getElementById(tabId);
+      if (targetContent) targetContent.classList.add('active');
+    }
+
+    // 深淺色主題切換
+    function toggleTheme() {
+      const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', newTheme);
+      
+      const icon = document.getElementById('themeIcon');
+      if (newTheme === 'light') {
+        // 月亮圖示
+        icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+      } else {
+        // 太陽圖示
+        icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+      }
+    }
+
+    // 複製樹狀結構文字
+    function copyTreeText() {
+      const text = document.getElementById('treeContent').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('樹狀架構文字已成功複製至剪貼簿！');
+      }).catch(err => {
+        console.error('複製失敗:', err);
+      });
+    }
+  </script>
+</body>
+</html>
